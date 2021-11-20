@@ -21,9 +21,22 @@ Template for integrating Kafka messaging broker in a complete streaming pipeline
   - model training folder contains the training script. upon training, log file is created with all the 
     training details registered. 
   
+  **HOW TO SETUP**
+  
+  1- Clone the repo.
+  
+  2- Install the dependencies in the requirements.txt file.
+  
+  3- Run run.sh file, now you have producer api up and running on port 5005 and model server on 5000.
+  
+  4- Replace the demo test set in model_train/Data folder.
+  
+  5- In a separate console, run python fire_and_ack.py to start streaming.
+  
+  
   **TODO**
   
-  - Restructure the system to be completely deployable via docker-swarm and kubernetes, which improves the scalabiltity
+  - Reform the system to be completely deployable via docker-swarm and kubernetes, which improves the scalabiltity
     and the performance of the system.
   
   
