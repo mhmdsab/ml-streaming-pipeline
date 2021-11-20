@@ -1,0 +1,11 @@
+confluent_kafka
+requests
+SQLAlchemy
+uvicorn
+fastapi
+pydantic
+opencv-python-headless
+numpy
+tensorflow==2.4.1
+image-classifiers==1.0.0b1
+keras_applications
