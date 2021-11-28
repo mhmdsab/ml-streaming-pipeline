@@ -11,9 +11,7 @@ url = "http://localhost:5005/items"
 
 
 def fire_kafka():
-    # for i in tqdm(range(0, len(val_df)//2)):
-    for i in tqdm(range(0, 5000)):
-    
+    for i in tqdm(range(0, len(val_df)//2)):    
         payload = json.dumps({
           "image": val_df.iloc[i,1:].tolist(),
           "broker":"kafka"
@@ -28,9 +26,7 @@ def fire_kafka():
 
 
 def fire_rmq():
-    # for i in tqdm(range(len(val_df)//2, len(val_df))):
-    for i in tqdm(range(5000, 10000)):
-    
+    for i in tqdm(range(len(val_df)//2, len(val_df))):    
         payload = json.dumps({
           "image": val_df.iloc[i,1:].tolist(),
           "broker":"pubsub"
