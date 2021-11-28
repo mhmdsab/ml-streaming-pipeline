@@ -6,32 +6,29 @@ Created on Thu Nov 18 12:37:53 2021
 @author: msabry
 """
 
+import confluent_kafka
 from confluent_kafka import Consumer, KafkaException
 import sys
 import json
 import logging
-from pprint import pformat
 import requests
-import json
 from sqlalchemy import create_engine
 
-def stats_cb(stats_json_str):
-    stats_json = json.loads(stats_json_str)
-    print('\nKAFKA Stats: {}\n'.format(pformat(stats_json)))
+
+url = "http://localhost:5000/predict"
 
 
 def register_consumbion(fashion_id, fashion_type):
     db_engine = create_engine('postgresql://postgres:password@192.168.100.239:5432/fashion_db')
     
     with db_engine.connect() as connection:
-        registeration = connection.execute(f'''INSERT INTO fashion (fashion_id, fashion_type)
-                                           VALUES ({fashion_id}, '{fashion_type}')''')
+        registeration = connection.execute(f'''INSERT INTO fashion (fashion_id, fashion_type, broker_type)
+                                           VALUES ({fashion_id}, '{fashion_type}', 'kafka')''')
 
 if __name__ == '__main__':
     # Consumer configuration
     # See https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
     conf = {'bootstrap.servers': "192.168.100.239:9092", 
-            # 'auto.create.topics.enable':True,
             'group.id': 'group1', 
             'session.timeout.ms': 6000,
             'auto.offset.reset': 'earliest'}
@@ -46,7 +43,6 @@ if __name__ == '__main__':
     logger.addHandler(handler)
 
     # Create Consumer instance
-    # Hint: try debug='fetch' to generate some log messages
     c = Consumer(conf, logger=logger)
 
     def print_assignment(consumer, partitions):
@@ -65,11 +61,11 @@ if __name__ == '__main__':
                 raise KafkaException(msg.error())
             else:
                 # Proper message
-                sys.stderr.write('%% %s [%d] at offset %d with key %s:\n' %
-                                 (msg.topic(), msg.partition(), msg.offset(),
-                                  str(msg.key())))
+                sys.stderr.write('%% %s [%d] at offset %d: from kafka broker\n' %
+                                 (msg.topic(), msg.partition(), msg.offset())
+                                 )
                 
-                url = "http://localhost:5000/predict"
+                
                 payload = json.dumps({
                                       "pixels": json.loads(msg.value().decode('utf-8'))
                                     })

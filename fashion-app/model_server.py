@@ -3,7 +3,7 @@
 """
 Created on Wed Nov 17 13:45:04 2021
 
-@author: ahmed
+@author: msabry
 """
 import os
 import uvicorn
@@ -15,7 +15,6 @@ from pydantic import BaseModel
 
 from utils import load_model, preprocess, predict
 
-print(os.getcwd())
 # Configuration
 BACKBONE = 'resnet18'
 

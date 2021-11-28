@@ -3,7 +3,7 @@
 """
 Created on Tue Nov 16 23:33:39 2021
 
-@author: ahmed
+@author: msabry
 """
 
 import os
@@ -32,14 +32,14 @@ def load_model(BACKBONE, img_size):
     model_.load_weights('{}/fashion-app/ckpt/{}_FASHION_MNIST.h5'.format(os.getcwd(), BACKBONE))
     return model_
 
-
+#preprocess the data
 def preprocess(pixels_list, img_base_size, img_size):
     img = np.array(pixels_list).reshape(img_base_size, img_base_size)/255.
     img = cv2.resize(img, (img_size, img_size))
     img = img[:,:,np.newaxis].astype('float32')
     return img
     
-
+#preprocess the class
 def predict(img, model, FASHION_DICT):
     # pred = model.predict(img)
     pred = model(np.expand_dims(img, 0))
