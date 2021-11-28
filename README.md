@@ -1,10 +1,10 @@
-# ml-kafka-pipeline
-Template for integrating Kafka messaging broker in a complete streaming pipeline which passes the stream through an inference model then stores the predictions in a database.
+# ml-streaming-pipeline
+Template for integrating Kafka and RabbitMQ messaging brokers in a complete streaming pipeline which passes the stream through an inference model then stores the predictions in a database.
 
 
 **The system comprises the following components**
 
-  1- Message broker to manage the stream, with a producer and consumer on top of it.
+  1- Unified API that produces messages to kafka and RabbitMQ to manage the stream, with a producer and consumer on top of them.
   
   2- Model server which recieves the image and returns the prediction.
   
