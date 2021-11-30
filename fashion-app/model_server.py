@@ -50,7 +50,7 @@ async def hello():
 
 
 @app.post('/predict')
-async def create_user(pixels: Item):
+async def predict_fashion(pixels: Item):
     response = {'success': False}
     if pixels.pixels:
         pixels_list = pixels.pixels
